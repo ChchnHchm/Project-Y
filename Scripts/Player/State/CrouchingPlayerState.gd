@@ -7,6 +7,7 @@ class_name CrouchingPlayerState extends PlayerMovementState
 var RELEASED : bool = false
 
 func enter(previous_state) -> void:
+	SPEED = 3.0
 	ANIMATION.speed_scale = 1.0
 	if previous_state.name != "SlidingPlayerState":
 		ANIMATION.play("Crouching",-1.0,CROUCH_SPEED)

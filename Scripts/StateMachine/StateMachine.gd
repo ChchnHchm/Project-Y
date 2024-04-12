@@ -22,6 +22,7 @@ func _process(delta):
 	CURRENT_STATE.update(delta)
 	Global.debug.add_debug_property("Current State",CURRENT_STATE.name,1)
 
+
 func _physics_process(delta):
 	CURRENT_STATE.physics_update(delta)
 
@@ -34,5 +35,4 @@ func on_child_transition(new_state_name: StringName):
 			new_state.enter(new_state)
 			CURRENT_STATE = new_state
 	else:
-		
 		push_warning(new_state_name + " State does not exist")

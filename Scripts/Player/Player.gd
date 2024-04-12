@@ -33,8 +33,9 @@ func _ready():
 	#get mouse input
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
+
 # on ajoute une exception au checking des collision, le checking doit se faire avec tout les objet sauf sois meme donc le player
-	#CROUCH_SHAPECAST.add_exception($".")
+	CROUCH_SHAPECAST.add_exception($".")
 
 
 func _unhandled_input(event): # la function se lance des qu'on bougera la souris 
