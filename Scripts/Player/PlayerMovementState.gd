@@ -1,0 +1,17 @@
+class_name PlayerMovementState extends State
+
+var PLAYER: Player
+var ANIMATION : AnimationPlayer
+@export var SPEED : float = 5.0
+@export var ACCELERATION : float = 0.1 # anything between 0 and 1
+@export var DECELERATION : float = 0.25 # anything between 0 and 1 
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	#PLAYER = get_tree().get_first_node_in_group("Player")
+	
+	await owner.ready
+	PLAYER = owner
+	ANIMATION = PLAYER.ANIMATIONPLAYER
+
+

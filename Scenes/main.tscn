@@ -1,26 +1,28 @@
-[gd_scene load_steps=9 format=3 uid="uid://dgf5dh1goo6ic"]
+[gd_scene load_steps=10 format=3 uid="uid://jonbrua2y1us"]
 
-[ext_resource type="Texture2D" uid="uid://ciu5f0243ghqr" path="res://assets/textures/dev/grids/Dark/texture_07.png" id="1_358lc"]
-[ext_resource type="Texture2D" uid="uid://cj2omd5hbygey" path="res://assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_0rnik"]
-[ext_resource type="Script" path="res://Scripts/Player.gd" id="3_gdfha"]
+[ext_resource type="Texture2D" uid="uid://ciu5f0243ghqr" path="res://assets/textures/dev/grids/Dark/texture_07.png" id="1_11cua"]
+[ext_resource type="Texture2D" uid="uid://cj2omd5hbygey" path="res://assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_h7duv"]
+[ext_resource type="Texture2D" uid="uid://b4kscs18rqs7v" path="res://assets/textures/dev/grids/Orange/texture_05.png" id="2_pf7of"]
+[ext_resource type="PackedScene" uid="uid://cfgaw1dt27apg" path="res://Scenes/Player.tscn" id="3_iny2p"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lvcd"]
-albedo_texture = ExtResource("1_358lc")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lkcq2"]
+albedo_texture = ExtResource("1_11cua")
 uv1_triplanar = true
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_rhxkj"]
-panorama = ExtResource("2_0rnik")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xx0fv"]
+albedo_texture = ExtResource("2_pf7of")
 
-[sub_resource type="Sky" id="Sky_a22dy"]
-sky_material = SubResource("PanoramaSkyMaterial_rhxkj")
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3frxe"]
+panorama = ExtResource("1_h7duv")
 
-[sub_resource type="Environment" id="Environment_2trps"]
+[sub_resource type="Sky" id="Sky_txwra"]
+sky_material = SubResource("PanoramaSkyMaterial_3frxe")
+
+[sub_resource type="Environment" id="Environment_f07e6"]
 background_mode = 2
-sky = SubResource("Sky_a22dy")
+sky = SubResource("Sky_txwra")
 tonemap_mode = 2
 glow_enabled = true
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mntpn"]
 
 [node name="World" type="Node3D"]
 
@@ -30,25 +32,22 @@ glow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
 size = Vector3(20, 1, 20)
-material = SubResource("StandardMaterial3D_0lvcd")
+material = SubResource("StandardMaterial3D_lkcq2")
 
-[node name="env" type="Node3D" parent="."]
+[node name="CSGBox3D2" type="CSGBox3D" parent="stage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.658, 1.9, -0.591)
+use_collision = true
+size = Vector3(5, 1, 5)
+material = SubResource("StandardMaterial3D_xx0fv")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="env"]
-environment = SubResource("Environment_2trps")
+[node name="Env" type="Node3D" parent="."]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="env"]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Env"]
+environment = SubResource("Environment_f07e6")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Env"]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Player" type="CharacterBody3D" parent="."]
-script = ExtResource("3_gdfha")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_mntpn")
-
-[node name="Head" type="Node3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Player/Head"]
+[node name="CharacterBody3D" parent="." instance=ExtResource("3_iny2p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.64564, 0)
