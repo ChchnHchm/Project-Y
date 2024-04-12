@@ -24,6 +24,6 @@ func update(delta):
 	if Input.is_action_just_pressed("Jump") and PLAYER.is_on_floor():
 		transition.emit("JumpPlayerState")
 		
-	#if PLAYER.velocity.y < -3.0 and !PLAYER.is_on_floor():
-		#transition.emit("FallingPlayerState")
+	if PLAYER.velocity.y < -3.0 and !PLAYER.is_on_floor():
+		transition.emit("FallingPlayerState")
 

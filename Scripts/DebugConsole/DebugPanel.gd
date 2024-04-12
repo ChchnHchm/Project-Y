@@ -33,8 +33,3 @@ func add_debug_property(title: String, value, order):
 		target.text = target.name + ": "+str(value)
 	elif visible:
 		target.text = title+ ": "+str(value)
-		#property_container.add_child(target,order)
-	#property = Label.new()
-	#property_container.add_child(property)
-	#property.name = title
-	#property.text = property.name + value 

@@ -2,7 +2,7 @@ class_name Player extends CharacterBody3D
 
 @export var ANIMATIONPLAYER : AnimationPlayer
 
-var CurrentSpeed = 5.0
+
 const JUMP_VELOCITY = 4.5
 
 
@@ -77,6 +77,7 @@ func update_gravity(delta) -> void:
 	velocity.y -= gravity * delta
 	
 func update_input(speed:float, acceleration:float,deceleration: float) -> void:
+
 		# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("MoveLeft", "MoveRight", "Forward", "Backward")
@@ -89,6 +90,8 @@ func update_input(speed:float, acceleration:float,deceleration: float) -> void:
 		var temp = move_toward(Vector2(velocity.x,velocity.z).length(), 0, deceleration)
 		velocity.x = vel.normalized().x * temp
 		velocity.z = vel.normalized().y * temp
+	Global.debug.add_debug_property("MovementSpeed",speed,1)
+	Global.debug.add_debug_property("Velocity","%.2f" % velocity.length(),2)
 	
 func update_velocity() -> void:
 	move_and_slide()

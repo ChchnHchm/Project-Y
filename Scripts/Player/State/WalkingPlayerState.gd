@@ -7,10 +7,10 @@ func enter(previous_state) -> void:
 	if ANIMATION.is_playing() and ANIMATION.current_animation == "JumpEnd":
 		await ANIMATION.animation_finished
 		ANIMATION.play("Walking",-1.0,1.0)
-		PLAYER.CurrentSpeed = SPEED
+		#PLAYER.CurrentSpeed = SPEED
 	else:
 		ANIMATION.play("Walking",-1.0,1.0)
-		PLAYER.CurrentSpeed = SPEED
+		#PLAYER.CurrentSpeed = SPEED
 	#
 
 func exit() -> void:

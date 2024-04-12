@@ -16,7 +16,7 @@ func enter(previous_state) -> void:
 
 func update(delta):
 	PLAYER.update_gravity(delta)
-	PLAYER.update_input(SPEED,ACCELERATION,DECELERATION) #désactiver pour empecher le joeur de se déplacer tout en glissant
+	PLAYER.update_input(SPEED,ACCELERATION,DECELERATION) #désactiver pour empecher le joueur de se déplacer tout en glissant
 	PLAYER.update_velocity()
 	
 func set_tilt(player_rotation) -> void:

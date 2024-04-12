@@ -5,7 +5,7 @@ class_name SprintingPlayerState extends PlayerMovementState
 
 
 func enter(previous_state) -> void:
-	SPEED = 7.0
+	SPEED = 26
 	if ANIMATION.is_playing() and ANIMATION.current_animation == "JumpEnd":
 		await ANIMATION.animation_finished
 		ANIMATION.play("Sprinting",0.5,1.0)

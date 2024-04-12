@@ -41,38 +41,3 @@ func uncrouch():
 	elif CROUCH_SHAPECAST.is_colliding():
 		await get_tree().create_timer(0.1).timeout
 		uncrouch()
-
-
-
-	#if event.is_action_pressed("crouch") and is_on_floor() and TOGGLE_CROUCH : # dans le  cas du toggle crouch
-		#toggle_crouch()
-	#if event.is_action_pressed("crouch") and !is_crouching and is_on_floor() and !TOGGLE_CROUCH: # cas du hold crouch
-		#crouching(true)
-	#if event.is_action_released("crouch")  and !TOGGLE_CROUCH: #on relache le crouch 
-		#if !CROUCH_SHAPECAST.is_colliding(): # si il n'ya pas de collision on peut se relever
-			#crouching(false)
-		#else:
-			#uncrouch_When_Free()#on va relacher le crouch seulement quand il n'y aura plus de collisions 
-#func uncrouch_When_Free():
-	#if !CROUCH_SHAPECAST.is_colliding(): # si il n'ya pas de collision on peut se relever
-		#crouching(false)
-	#else: 
-		#await get_tree().create_timer(0.1).timeout
-		#uncrouch_When_Free()
-		#
-		
-#func crouching(state: bool):
-	#match state:
-		#true:
-			#ANIMATIONPLAYER.play("crouch", 0, CROUCH_SPEED)
-			#SetMovementSpeed("crouching")
-		#false:
-			#ANIMATIONPLAYER.play("crouch", 0, -CROUCH_SPEED,true)# on fait la meme chose que pour s'accroupir sauf qu'avec le - l'animation se fera a l'envers et true pour l'animation commence par la fin
-			#SetMovementSpeed("default")
-#
-#func toggle_crouch(): #se lancera des que le joueur appuie sur la  touche s'ascroupir
-	#if is_crouching and !CROUCH_SHAPECAST.is_colliding() : # si le joeur appui sur crouch alors que l'on est deja crouch on se releve et seuleemnt si il n'y a pas de collision avec d'autre objets
-		#crouching(false) 
-	#elif  !is_crouching and is_on_floor() :
-		#crouching(true)
-	#
