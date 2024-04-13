@@ -6,9 +6,14 @@
 [resource]
 script = ExtResource("1_toqnc")
 name = &"CrowBar"
-positionRightHand = Vector3(0.5, 1, -0.555)
-positionLeftHand = Vector3(-0.5, 1, -0.55)
+position = Vector3(0.5, 1, -0.555)
 rotation = Vector3(0, 0, -90)
+SwayMin = Vector2(-20, -20)
+SwayMax = Vector2(20, 20)
+SwaySpeedPosition = 0.07
+SwaySpeedRotation = 0.1
+SwayAmountPosition = 0.1
+SwayAmountRotation = 30.0
 mesh = ExtResource("1_p23qe")
 shadow = false
 damageAmount = 0.0
