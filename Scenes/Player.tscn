@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cfgaw1dt27apg"]
+[gd_scene load_steps=26 format=3 uid="uid://cfgaw1dt27apg"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_kriw8"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/StateMachine.gd" id="2_s7cg6"]
@@ -17,6 +17,8 @@
 [ext_resource type="Animation" uid="uid://dvdt3pt8pe40v" path="res://animation/Sprinting.res" id="10_sodfl"]
 [ext_resource type="Animation" uid="uid://dk5328eugxnbc" path="res://animation/JumpStart.res" id="13_t2wwk"]
 [ext_resource type="Animation" uid="uid://bnjaf1xfn5fr2" path="res://animation/JumpEnd.res" id="14_4836f"]
+[ext_resource type="PackedScene" uid="uid://b7p70k8b3yck8" path="res://Scenes/weapon.tscn" id="18_c55do"]
+[ext_resource type="Resource" uid="uid://cmf4kd2gslrp8" path="res://Item/Weapon/CrowBar/CrowBarResources.tres" id="19_x0m16"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cr2oa"]
 
@@ -278,3 +280,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.997294, 0)
 shape = SubResource("SphereShape3D_uxh1d")
 target_position = Vector3(0, 0.5, 0)
 debug_shape_custom_color = Color(1, 1, 0, 1)
+
+[node name="Weapons" type="Node3D" parent="."]
+
+[node name="Weapon" parent="Weapons" instance=ExtResource("18_c55do")]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.5, 1, -0.555)
+WeaponType = ExtResource("19_x0m16")

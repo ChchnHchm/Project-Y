@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7p70k8b3yck8"]
+
+[ext_resource type="Script" path="res://Scenes/InitWeapon.gd" id="1_wpfek"]
+
+[node name="Weapon" type="Node3D"]
+script = ExtResource("1_wpfek")
+
+[node name="WeaponMesh" type="MeshInstance3D" parent="."]
+
+[node name="WeaponShadow" type="MeshInstance3D" parent="."]
+skeleton = NodePath("../WeaponMesh")
