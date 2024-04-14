@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cfgaw1dt27apg"]
+[gd_scene load_steps=28 format=3 uid="uid://cfgaw1dt27apg"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_kriw8"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/StateMachine.gd" id="2_s7cg6"]
@@ -171,6 +171,11 @@ _data = {
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_uxh1d"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1e7rp"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_031d5"]
+noise = SubResource("FastNoiseLite_1e7rp")
+
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("ANIMATIONPLAYER", "CAMERA_CONTROLLER", "CROUCH_SHAPECAST")]
 script = ExtResource("1_kriw8")
 ANIMATIONPLAYER = NodePath("AnimationPlayer")
@@ -283,6 +288,10 @@ debug_shape_custom_color = Color(1, 1, 0, 1)
 
 [node name="Weapons" type="Node3D" parent="."]
 
-[node name="Weapon" parent="Weapons" instance=ExtResource("18_c55do")]
+[node name="Weapon" parent="Weapons" node_paths=PackedStringArray("player") instance=ExtResource("18_c55do")]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.5, 1, -0.555)
 WeaponType = ExtResource("19_x0m16")
+player = NodePath("../..")
+sway_noise = SubResource("NoiseTexture2D_031d5")
+sway_speed = 1.0
+reset = true

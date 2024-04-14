@@ -4,6 +4,8 @@
 
 [node name="Weapon" type="Node3D"]
 script = ExtResource("1_wpfek")
+sway_speed = null
+reset = null
 
 [node name="WeaponMesh" type="MeshInstance3D" parent="."]
 
