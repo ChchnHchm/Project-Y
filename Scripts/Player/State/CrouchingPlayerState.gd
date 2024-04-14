@@ -8,6 +8,9 @@ var RELEASED : bool = false
 
 func enter(previous_state) -> void:
 	SPEED = 3.0
+	WeaponBobSpeed  = 2.0
+	WeaponBobHorizontal = 1.5
+	WeaponBobVertical = 0.7
 	ANIMATION.speed_scale = 1.0
 	if previous_state.name != "SlidingPlayerState":
 		ANIMATION.play("Crouching",-1.0,CROUCH_SPEED)
@@ -20,8 +23,8 @@ func update(delta):
 	PLAYER.update_gravity(delta)
 	PLAYER.update_input(SPEED,ACCELERATION,DECELERATION)
 	PLAYER.update_velocity()
-	
-	
+	Weapon.SwayWeapon(delta, false)
+	Weapon.WeaponBobing(delta,WeaponBobSpeed,WeaponBobHorizontal,WeaponBobVertical)
 	if Input.is_action_just_released("Crouch"):
 		uncrouch()
 	if Input.is_action_just_pressed("Jump") and PLAYER.is_on_floor():

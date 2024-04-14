@@ -21,7 +21,7 @@ var _current_rotation: float
 var _mouse_input : bool = false #indicate if the mouse is moving or not
 #################################################################################################################################
 @export var CROUCH_SHAPECAST : Node3D # va vérifier les collisions lorsque l'on se relève 
-
+@export var WeaponController : WeaponController
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 

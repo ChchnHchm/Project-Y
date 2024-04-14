@@ -1,5 +1,5 @@
 @tool
-extends Node3D
+class_name  WeaponController extends Node3D
 
 @export var WeaponType : Weapons :
 	set(value):
@@ -17,13 +17,14 @@ extends Node3D
 		reset = value
 		if Engine.is_editor_hint():
 			loadWeapon()
-var RandomSwayX
-var RandomSwayY
+var RandomSwayX : float = 0
+var RandomSwayY : float = 0
 var RandomSwayAmount : float
 var time : float = 0.0
 var IdleSwayAdjustement
 var IdleSwayRotationStrength
 
+var WeaponBobingAmount : Vector2 = Vector2(0,0)
 
 
 var MouseMovement : Vector2
@@ -48,35 +49,34 @@ func loadWeapon() -> void:
 	IdleSwayRotationStrength = WeaponType.IdleSwayRotationStrenght
 	RandomSwayAmount = WeaponType.RandomSwayAmount
 
-func SwayWeapon(delta) -> void:
+func SwayWeapon(delta, isIdle : bool) -> void:
 	if not Engine.is_editor_hint():
-		#Get random sway value
-		var SwayRandom : float = GetSwayNoise()
-		var SwayRandomAdjusted : float = SwayRandom * IdleSwayAdjustement
-		
-		#create time with delta
-		time += delta * (sway_speed + SwayRandom)
-		RandomSwayX = sin(time * 1.5 + SwayRandomAdjusted) / RandomSwayAmount
-		RandomSwayY = sin(time - SwayRandomAdjusted) / RandomSwayAmount
-		
 		#clamp mouse movement
 		MouseMovement = MouseMovement.clamp(WeaponType.SwayMin,WeaponType.SwayMax)
 		
+		if isIdle :
+			#Get random sway value
+			var SwayRandom : float = GetSwayNoise()
+			var SwayRandomAdjusted : float = SwayRandom * IdleSwayAdjustement
+			#create time with delta
+			time += delta * (sway_speed + SwayRandom)
+			RandomSwayX = sin(time * 1.5 + SwayRandomAdjusted) / RandomSwayAmount
+			RandomSwayY = sin(time - SwayRandomAdjusted) / RandomSwayAmount
+
 		#lerp position
 		var WeaponTypePosX : float = WeaponType.position.x
 		if position.x < 0:
 			# we take neg value if left handed
 			WeaponTypePosX = - WeaponTypePosX
 		
-		position.x = lerp(position.x, WeaponTypePosX - (MouseMovement.x * WeaponType.SwayAmountPosition + RandomSwayX) * delta, WeaponType.SwaySpeedPosition)
-		position.y = lerp(position.y, WeaponType.position.y + (MouseMovement.y * WeaponType.SwayAmountPosition + RandomSwayY) * delta, WeaponType.SwaySpeedPosition)
+		position.x = lerp(position.x, WeaponTypePosX - (MouseMovement.x * WeaponType.SwayAmountPosition + RandomSwayX  + WeaponBobingAmount.x) * delta, WeaponType.SwaySpeedPosition)
+		position.y = lerp(position.y, WeaponType.position.y + (MouseMovement.y * WeaponType.SwayAmountPosition + RandomSwayY  + WeaponBobingAmount.y) * delta, WeaponType.SwaySpeedPosition)
 
 		#lerp rotation
 		rotation_degrees.x = lerp(rotation_degrees.x, WeaponType.rotation.x - (MouseMovement.y * WeaponType.SwayAmountRotation + (RandomSwayX * IdleSwayRotationStrength)) * delta, WeaponType.SwaySpeedRotation)
 		rotation_degrees.y = lerp(rotation_degrees.y, WeaponType.rotation.y + (MouseMovement.x * WeaponType.SwayAmountRotation + (RandomSwayY * IdleSwayRotationStrength)) * delta, WeaponType.SwaySpeedRotation)
-	
-func _physics_process(delta):
-	SwayWeapon(delta)
+		
+		WeaponBobingAmount = Vector2(0,0)
 
 func GetSwayNoise() -> float:
 	var PlayerPosition : Vector3 = Vector3(0,0,0)
@@ -85,3 +85,9 @@ func GetSwayNoise() -> float:
 		PlayerPosition = player.global_position
 	
 	return sway_noise.noise.get_noise_2d(PlayerPosition.x,PlayerPosition.y)
+	
+func WeaponBobing(delta,WeaponBobSpeed:float,WeaponBobHorizontal:float,WeaponBobVertical:float):
+	time += delta
+	
+	WeaponBobingAmount.x = sin(time * WeaponBobSpeed) * WeaponBobHorizontal
+	WeaponBobingAmount.y = abs(cos(time * WeaponBobSpeed) * WeaponBobVertical )

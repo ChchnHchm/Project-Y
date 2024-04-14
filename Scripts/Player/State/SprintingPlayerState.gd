@@ -5,7 +5,11 @@ class_name SprintingPlayerState extends PlayerMovementState
 
 
 func enter(previous_state) -> void:
-	SPEED = 26
+	SPEED = 7
+	WeaponBobSpeed  = 8.0
+	WeaponBobHorizontal = 2.5
+	WeaponBobVertical = 1.5
+	
 	if ANIMATION.is_playing() and ANIMATION.current_animation == "JumpEnd":
 		await ANIMATION.animation_finished
 		ANIMATION.play("Sprinting",0.5,1.0)
@@ -18,7 +22,8 @@ func update(delta):
 	PLAYER.update_gravity(delta)
 	PLAYER.update_input(SPEED,ACCELERATION,DECELERATION)
 	PLAYER.update_velocity()
-	
+	Weapon.SwayWeapon(delta, false)
+	Weapon.WeaponBobing(delta,WeaponBobSpeed,WeaponBobHorizontal,WeaponBobVertical)
 	set_animation_speed(PLAYER.velocity.length())
 	
 	if Input.is_action_just_released("Sprint") or PLAYER.velocity.length() == 0:

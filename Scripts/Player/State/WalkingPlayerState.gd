@@ -20,7 +20,8 @@ func update(delta):
 	PLAYER.update_gravity(delta)
 	PLAYER.update_input(SPEED,ACCELERATION,DECELERATION)
 	PLAYER.update_velocity()
-	
+	Weapon.SwayWeapon(delta, false)
+	Weapon.WeaponBobing(delta,WeaponBobSpeed,WeaponBobHorizontal,WeaponBobVertical)
 	set_animation_speed(PLAYER.velocity.length())
 	
 	if Input.is_action_just_pressed("Sprint") and PLAYER.is_on_floor():

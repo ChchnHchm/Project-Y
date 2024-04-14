@@ -28,6 +28,11 @@ albedo_color = Color(1, 0, 0, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_0kekq"]
 material = SubResource("StandardMaterial3D_g0ybh")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1e7rp"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_031d5"]
+noise = SubResource("FastNoiseLite_1e7rp")
+
 [sub_resource type="Animation" id="Animation_lo5ky"]
 length = 0.001
 tracks/0/type = "bezier"
@@ -171,16 +176,12 @@ _data = {
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_uxh1d"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_1e7rp"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_031d5"]
-noise = SubResource("FastNoiseLite_1e7rp")
-
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("ANIMATIONPLAYER", "CAMERA_CONTROLLER", "CROUCH_SHAPECAST")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("ANIMATIONPLAYER", "CAMERA_CONTROLLER", "CROUCH_SHAPECAST", "WeaponController")]
 script = ExtResource("1_kriw8")
 ANIMATIONPLAYER = NodePath("AnimationPlayer")
 CAMERA_CONTROLLER = NodePath("Head/Camera3D")
 CROUCH_SHAPECAST = NodePath("ShapeCast3D")
+WeaponController = NodePath("Head/Camera3D/Weapons/Weapon")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -193,6 +194,17 @@ mesh = SubResource("CapsuleMesh_0kekq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015, 1.8, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
+
+[node name="Weapons" type="Node3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.015, -1.8, 0)
+
+[node name="Weapon" parent="Head/Camera3D/Weapons" node_paths=PackedStringArray("player") instance=ExtResource("18_c55do")]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.5, 1, -0.555)
+WeaponType = ExtResource("19_x0m16")
+player = NodePath("../../../..")
+sway_noise = SubResource("NoiseTexture2D_031d5")
+sway_speed = 1.0
+reset = true
 
 [node name="PlayerStateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
 script = ExtResource("2_s7cg6")
@@ -285,13 +297,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.997294, 0)
 shape = SubResource("SphereShape3D_uxh1d")
 target_position = Vector3(0, 0.5, 0)
 debug_shape_custom_color = Color(1, 1, 0, 1)
-
-[node name="Weapons" type="Node3D" parent="."]
-
-[node name="Weapon" parent="Weapons" node_paths=PackedStringArray("player") instance=ExtResource("18_c55do")]
-transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.5, 1, -0.555)
-WeaponType = ExtResource("19_x0m16")
-player = NodePath("../..")
-sway_noise = SubResource("NoiseTexture2D_031d5")
-sway_speed = 1.0
-reset = true
