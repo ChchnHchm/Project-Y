@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmuwq08jj33sf"]
+
+[ext_resource type="Script" path="res://Scripts/Dungeon.gd" id="1_10jik"]
+[ext_resource type="MeshLibrary" uid="uid://bsmiivlp1hd8j" path="res://Dungeon MESH/dungeonmeshlibrary.tres" id="1_jaqt2"]
+[ext_resource type="Script" path="res://Scripts/Dungeon Mesh.gd" id="3_glnyy"]
+
+[node name="DunGen" type="Node3D"]
+script = ExtResource("1_10jik")
+BorderSize = 31
+roomNumber = 10
+minRoomSize = 5
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("1_jaqt2")
+cell_size = Vector3(1, 1, 1)
+cell_center_y = false
+
+[node name="Dungeon Mesh" type="Node3D" parent="."]
+script = ExtResource("3_glnyy")
+grid_map_path = NodePath("../GridMap")

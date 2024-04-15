@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://0uhcd0dowslg"]
+
+[ext_resource type="Texture2D" uid="uid://dv8aaffmumlkr" path="res://assets/Models/Dongeon Cells/walls ruin/wall_ruins_0.jpg" id="1_f161a"]
+
+[resource]
+resource_name = "defaultMat"
+cull_mode = 2
+albedo_color = Color(1, 1, 1, 1)
+albedo_texture = ExtResource("1_f161a")
+roughness = 0.499682
