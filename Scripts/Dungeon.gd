@@ -1,48 +1,93 @@
 @tool
-extends Node3D
-@onready var grid_map : GridMap = $GridMap
+class_name DungeonGenerator extends Node3D
 
-
-@export var start : bool = false : set = set_start
-func set_start(val:bool) ->void:
-	if Engine.is_editor_hint():
-		generate()
+@onready var grid_map : GridMap = %GridMap
+@export var GenerateSqueleton : bool = false : set = set_start
+@export var Generate : bool = false : set = set_dungeon
 @export_range(0,1) var survival_chance : float = 0.25
 @export var BorderSize : int = 20 : 	set = set_border_size
-func set_border_size(val:int) ->void:
-	BorderSize = val
-	if Engine.is_editor_hint():
-		visualizeBorder()
 @export var roomNumber : int = 4
-
 @export var roomMargin : int  = 1
 @export var roomRecursion : int = 15
 @export var minRoomSize : int = 2
 @export var MaxRoomSize : int = 4
 @export_multiline var customSeed : String = "" : set = setSeed
+@export var Reset : bool = false : set = set_reset
+@export var clearGrid : bool = false : set = setClear
+@export var DungeonType : DungeonsBluePrint : set =  SetDungeonType
+
+func set_start(val:bool) ->void:
+	if Engine.is_editor_hint():
+		generate()
+
+func set_border_size(val:int) ->void:
+	BorderSize = val
+	if Engine.is_editor_hint():
+		visualizeBorder()
+
 func setSeed(val:String)->void:
 	customSeed = val
 	seed(val.hash())
-@export var Reset : bool = false : set = set_reset
+
 func set_reset(val:bool)->void:
-	var DungeonCells : Node3D = $"Dungeon Mesh"
-	if DungeonCells.get_child_count() > 0:
-		for n in DungeonCells.get_children(): n.queue_free()
+	if Engine.is_editor_hint():
+		var DungeonCells : Node3D = $"Dungeon Mesh"
+		if DungeonCells.get_child_count() > 0:
+			for n in DungeonCells.get_children(): n.queue_free()
+		if grid_map :
+			grid_map.clear()
+
+func setClear(val:bool)->void:
 	if grid_map :
 		grid_map.clear()
+
 var roomTiles : Array[PackedVector3Array] = []
 var roomPosition : PackedVector3Array = []
 
-
 func visualizeBorder()->void:
-	if grid_map :
-		grid_map.clear()
-	for i in range(-1,BorderSize+1):
-		grid_map.set_cell_item(Vector3i(i,0,-1),3)
-		grid_map.set_cell_item(Vector3i(i,0,BorderSize),3)
-		grid_map.set_cell_item(Vector3i(BorderSize,0,i),3)
-		grid_map.set_cell_item(Vector3i(-1,0,i),3)
+	if Engine.is_editor_hint():
+		if grid_map :
+			grid_map.clear()
+		for i in range(-1,BorderSize+1):
+			grid_map.set_cell_item(Vector3i(i,0,-1),3)
+			grid_map.set_cell_item(Vector3i(i,0,BorderSize),3)
+			grid_map.set_cell_item(Vector3i(BorderSize,0,i),3)
+			grid_map.set_cell_item(Vector3i(-1,0,i),3)
 
+func SetGrid(grid : GridMap):
+	self.grid_map = grid
+
+func set_dungeon(val:bool) ->void:
+	if  Engine.is_editor_hint():
+		generate()
+		var DungeonMesh = $"Dungeon Mesh"
+		DungeonMesh.SetGrid(grid_map)
+		DungeonMesh.call("create_dungeon")
+
+func SetDungeonFromCode(parent: Node3D)->void:
+	generate()
+	InitializeDungeonMesh(parent)
+
+func InitializeDungeonMesh(parent: Node3D):
+	var DungeonMesh = $"Dungeon Mesh"
+	DungeonMesh.SetGrid(grid_map)
+	self.set_owner(parent)
+	DungeonMesh.SetParent(self)
+	DungeonMesh.call("create_dungeon")
+	
+func SetDungeonType(type: DungeonsBluePrint):
+	self.DungeonType = type
+	loadDungeonSettings()
+
+func loadDungeonSettings():
+	survival_chance  = DungeonType.survival_chance
+	BorderSize  = DungeonType.BorderSize
+	roomNumber  = DungeonType.roomNumber
+	roomMargin   = DungeonType.roomMargin
+	roomRecursion  = DungeonType.roomRecursion
+	minRoomSize  = DungeonType.minRoomSize
+	MaxRoomSize  = DungeonType.MaxRoomSize
+	customSeed  = DungeonType.customSeed
 
 func generate()->void:
 	roomTiles.clear()
@@ -142,6 +187,7 @@ func createHallways(hallway_graph:AStar2D):
 			var pos : Vector3i = Vector3i(t.x,0,t.y)
 			if grid_map.get_cell_item(pos) < 0:
 				grid_map.set_cell_item(pos,1)
+
 func makeRoom(rec : int):
 	if !rec > 0:
 		return

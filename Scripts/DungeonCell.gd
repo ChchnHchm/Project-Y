@@ -1,7 +1,9 @@
 @tool
-extends Node3D
+class_name DungeonCell extends Node3D
 
-
+func _ready():
+	print(owner)
+	
 func remove_wall_up():
 	$Wall/Wall_up.free()
 func remove_wall_down():

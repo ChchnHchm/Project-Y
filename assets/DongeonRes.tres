@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DungeonsBluePrint" load_steps=2 format=3 uid="uid://cnou7dor4jwyx"]
+
+[ext_resource type="Script" path="res://Scripts/DungeonBluePrint.gd" id="1_8hxs7"]
+
+[resource]
+script = ExtResource("1_8hxs7")
+survival_chance = 0.25
+BorderSize = 100
+roomNumber = 10
+roomMargin = 1
+roomRecursion = 15
+minRoomSize = 5
+MaxRoomSize = 15
+customSeed = ""

@@ -1,7 +1,6 @@
 @tool
 extends Node3D
 
-
 func remove_wall_up():
 	$wall_up.free()
 func remove_wall_down():
