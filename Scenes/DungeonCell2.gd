@@ -1,5 +1,5 @@
 @tool
-class_name DungeonCell extends Node3D
+extends Node3D
 
 
 func remove_wall_up():

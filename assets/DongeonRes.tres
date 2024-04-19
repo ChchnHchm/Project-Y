@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource("1_8hxs7")
 survival_chance = 0.25
-BorderSize = 100
-roomNumber = 10
+BorderSize = 10
+roomNumber = 4
 roomMargin = 1
 roomRecursion = 15
-minRoomSize = 5
-MaxRoomSize = 15
+minRoomSize = 1
+MaxRoomSize = 3
 customSeed = ""

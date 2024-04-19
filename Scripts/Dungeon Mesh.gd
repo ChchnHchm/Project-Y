@@ -10,6 +10,7 @@ func set_start(val:bool)->void:
 	if Engine.is_editor_hint():
 		create_dungeon()
 var dun_cell_scene : PackedScene = preload("res://assets/Models/Dongeon Cells/imports/dun_cell.tscn")
+var dun_entrance : PackedScene = preload("res://Scenes/DungeonCell2.tscn")
 #var dun_cell_scene : PackedScene = preload("res://Scenes/DungeonCell2.tscn")
 var directions : Dictionary = {
 	"up" : Vector3i.FORWARD,"down" : Vector3i.BACK,
@@ -26,7 +27,6 @@ func handle_00(cell:Node3D,dir:String):
 	cell.call("remove_door_"+dir)
 func handle_01(cell:Node3D,dir:String):
 	cell.call("remove_door_"+dir)
-	
 func handle_02(cell:Node3D,dir:String):
 	cell.call("remove_wall_"+dir)
 	cell.call("remove_door_"+dir)
@@ -53,13 +53,19 @@ func create_dungeon():
 		remove_child(c)
 		c.queue_free()
 	#var t : int = 0
-	
-	
+	var entrance : bool = false
 	for cell in grid_map.get_used_cells():
 		var cell_index : int = grid_map.get_cell_item(cell)
 		if cell_index <=2\
 		&& cell_index >=0:
-			var dun_cell : Node3D = dun_cell_scene.instantiate()
+			var dun_cell : Node3D = null
+			if !entrance:
+				dun_cell = dun_entrance.instantiate()
+				entrance = true
+			else:
+				dun_cell  = dun_cell_scene.instantiate()
+			if dun_cell == null:
+				push_warning("SCENE DUNGEON CELL NULL")
 			dun_cell.position = Vector3(cell) + Vector3(0.5,0,0.5)
 			add_child(dun_cell)
 			

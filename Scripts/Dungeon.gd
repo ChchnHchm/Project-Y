@@ -76,7 +76,7 @@ func InitializeDungeonMesh(parent: Node3D):
 	DungeonMesh.call("create_dungeon")
 	
 func SetDungeonType(type: DungeonsBluePrint):
-	self.DungeonType = type
+	DungeonType = type
 	loadDungeonSettings()
 
 func loadDungeonSettings():
@@ -94,7 +94,7 @@ func generate()->void:
 	roomPosition.clear()
 	if customSeed : setSeed(customSeed)
 	visualizeBorder()
-	for i in roomNumber:
+	for i in roomNumber :
 		makeRoom(roomRecursion)
 	
 	var roomPostitionVector2 : PackedVector2Array = []
@@ -198,7 +198,7 @@ func makeRoom(rec : int):
 	var startPosition : Vector3i
 	startPosition.x = randi() % (BorderSize - width +1)
 	startPosition.z = randi() % (BorderSize - height +1)
-
+	
 	for r in range(-roomMargin, height+roomMargin):
 		for c in range(-roomMargin,width+roomMargin):
 			var pos : Vector3i = startPosition + Vector3i(c,0,r)
@@ -217,3 +217,5 @@ func makeRoom(rec : int):
 	var avgZ : float = startPosition.z + (float(height)/2)
 	var pos :Vector3 = Vector3(avgX,0,avgZ)
 	roomPosition.append(pos)
+
+

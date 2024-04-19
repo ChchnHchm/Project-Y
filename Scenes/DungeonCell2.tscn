@@ -1,4 +1,6 @@
-[gd_scene load_steps=37 format=3 uid="uid://dm0r2ocnqkmqj"]
+[gd_scene load_steps=38 format=3 uid="uid://dm0r2ocnqkmqj"]
+
+[ext_resource type="Script" path="res://Scenes/DungeonCell2.gd" id="1_vt6bw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n8g1b"]
 resource_name = "grey_light"
@@ -563,6 +565,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_px1t1")
 
 [node name="Dungeon Cell" type="Node3D"]
+script = ExtResource("1_vt6bw")
 
 [node name="Celling" type="Node3D" parent="."]
 
